@@ -1,0 +1,54 @@
+{% extends "login_layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="box container is-flex is-flex-direction-column">
+        <p class="title has-text-centered">Реєстрація</p>
+        <div class="step-container">
+            <section class="step-indicator">
+                <div class="step step1 active" id="step-1">
+                    <div class="step-icon">1</div>
+                  <p>Основне</p>
+                </div>
+              <div class="indicator-line" id="line-step-2"></div>
+              <div class="step step2" id="step-2">
+                  <div class="step-icon">2</div>
+                <p>Додаткові дані</p>
+              </div>
+              <div class="indicator-line" id="line-step-3"></div>
+              <div class="step step3" id="step-3">
+                  <div class="step-icon">3</div>
+                <p>Готово</p>
+              </div>
+            </section>
+        </div>
+        <div class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
+            <p class="title">Вітаю! Ви зареєструвались</p>
+            <div class="buttons">
+                <a href="/" class="button is-primary">Перейти в кабінет</a>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+    const step = {{step}}
+    for (let i = 0; i < step; i++) {
+        let element = document.getElementById(`step-${i+1}`)
+        if(element){
+            element.classList.add("active")
+        }
+        
+      }
+    for (let i = 0; i < step; i++) {
+        let element = document.getElementById(`line-step-${i+1}`)
+        if(element){
+            element.classList.add("active")
+        }
+      }
+    
+    
+    
+</script>
+{% endblock%}

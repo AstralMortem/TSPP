@@ -1,0 +1,29 @@
+<ul class="is-overflowed" id="side-ul">
+    {%for order in object_list%}
+        <li class="mb-2">
+            <div class="card is-clickable p-2 card-hovered" hx-get="{%url 'fundraising:detail' pk=order.id%}" hx-target="#content-detail" hx-swap="innerHTML" hx-trigger="click">
+                    <p class="title is-4">{{order.title}}</p>
+                    <p class="subtitle is-6">{{order.info|truncatechars:40}}</p>
+                    <p class="title is-5">{{order.price}} UAH</p>
+                    <div class="is-flex is-justify-content-space-between is-flex-direction-row is-align-items-flex-end">
+                        <p>{{order.created_at|date:'d.m.Y'}}</p>
+                        <a class="button is-text" href="/">
+                           <span class="mr-2">
+                                <p>{{order.squad.squad_name}}</p>
+                           </span>
+                           <span>
+                                <figure class="image is-32x32">
+                                    <img class="is-rounded" src="{{order.squad.get_photo}}">
+                                </figure>
+                           </span>
+                        </a>
+                    </div>
+            </div>
+        </li>
+    {%empty%}
+        <p>Нажаль тут нічого немає</p>
+    {%endfor%}
+</ul>
+{%if page_obj.has_next%}
+    <button class="button is-primary" hx-get="{{request.path}}?page={{page_obj.next_page_number}}" hx-trigger="click" hx-swap="outerHTML" hx-targe="side-ul">Далі...</button>
+{%endif%}

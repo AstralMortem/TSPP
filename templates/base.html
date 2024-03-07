@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%block head_links%}
+        {% include "head.html" %}
+    {%endblock%}
+    <title>{{title}}</title>
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    <header>
+        {%block header%}
+        {%endblock%}
+    </header>
+    <article class="has-background-light">
+        {%block content%}
+            {%endblock%}
+    </article>
+    <footer>
+        {%block footer%}
+        {%endblock%}
+    </footer>
+
+    {%block scripts%}
+        {% include "scripts.html" %}
+    {% endblock %}
+    
+</body>
+</html>

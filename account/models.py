@@ -7,6 +7,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.utils.translation import gettext_lazy as _
+from django.contrib.staticfiles import finders
 
 
 # Base auth manager
@@ -39,6 +40,14 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
+class Role(models.Model):
+    title = models.CharField(_("title"), max_length=254)
+    is_active = models.BooleanField(_("Is active role"), default=True)
+
+    def __str__(self):
+        return self.title
+
+
 # Base user class
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("Email"), max_length=254, unique=True)
@@ -46,6 +55,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     image = models.ImageField(
         _("Image"), upload_to="users/avatars", null=True, blank=True
     )
+    role = models.ForeignKey(Role, on_delete=models.PROTECT, blank=True, null=True)
     is_active = models.BooleanField(_("Is user active"), default=False)
     is_superuser = models.BooleanField(_("Is Superuser"), default=False)
     is_staff = models.BooleanField(_("Is staff"), default=False)
@@ -86,7 +96,12 @@ class SquadType(models.Model):
 
 # volunter user model
 class Volunter(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT, primary_key=True)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        primary_key=True,
+        related_name="user_to_volunter",
+    )
     full_name = models.CharField(_("Full name"), max_length=254, null=True, blank=True)
     organization_name = models.CharField(
         _("Organization name"), max_length=254, null=True, blank=True
@@ -106,7 +121,9 @@ class Volunter(models.Model):
 
 # squad user model
 class Squad(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT, primary_key=True)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True, related_name="user_to_squad"
+    )
     squad_name = models.CharField(_("squad name"), max_length=254)
     squad_type = models.ForeignKey(
         SquadType, on_delete=models.PROTECT, verbose_name=_("Squad type name")
@@ -114,3 +131,8 @@ class Squad(models.Model):
 
     def __str__(self):
         return self.squad_name
+
+    def get_photo(self):
+        if self.user.image:
+            return self.user.image.url
+        return "/static/img/no_image.png"

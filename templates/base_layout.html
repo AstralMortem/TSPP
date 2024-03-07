@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{%block header%}
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <p>LOGO</p>
+      </a>
+  
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div id="navbar" class="navbar-menu">
+      {%if request.user.is_authenticated%}
+      <div class="navbar-start">
+        <a class="navbar-item" hx-get="{%url 'orders:view'%}" hx-target="#content-div" hx-swap="innerHTML">
+          Запити
+        </a>
+  
+        <a class="navbar-item" hx-get="{%url 'fundraising:view'%}" hx-target="#content-div" hx-swap="innerHTML">
+          Збори коштів
+        </a>
+
+        <a class="navbar-item">
+            Військові бригади
+        </a>
+
+        <a class="navbar-item">
+            Фонди
+        </a>
+      </div>
+
+      <div class="navbar-end">
+
+        <div class="navbar-item">
+            <div class="buttons">
+                <a class="button is-info" hx-get="{%url 'orders:add'%}" hx-swap="innerHTML" hx-target="#content-div">Створити запит</a>
+                <a class="button is-primary" hx-get="{%url 'fundraising:add'%}"  hx-swap="innerHTML" hx-target="#content-div">Створити збір</a>
+            </div>
+        </div>
+
+        <div class="navbar-item">
+            <div class="buttons">
+                <a class="button is-rounded is-small">
+                    <span class="icon is-small">
+                        <i class="fa-regular fa-bell"></i>
+                    </span>
+                </a>
+                <a class="button is-rounded is-small">
+                    <span class="icon is-small">
+                        <i class="fa-regular fa-envelope"></i>
+                    </span>
+                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link is-arrowless button is-rounded">
+                            <span class="icon is-small">
+                                <i class="fa-regular fa-user"></i>
+                            </span>
+                    </a>
+                    <div class="navbar-dropdown">
+                      <a class="navbar-item">
+                        Профіль
+                      </a>
+                      <a class="navbar-item">
+                        Мої запити
+                      </a>
+                      <a class="navbar-item">
+                        Мої збори
+                      </a>
+                      <hr class="navbar-divider">
+                      <form action="{%url 'account:logout'%}" method="POST" class="navbar-item">
+                        {% csrf_token %}
+                        <button class=" is-danger button m-2" type="submit">
+                            Вийти 
+                        </button>
+                      </form>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      </div>
+      {%else%}
+        <div class="navbar-start">
+          <a class="navbar-item">
+            Про нас
+          </a>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+                <a class="button is-primary is-outlined" href="{%url 'account:login'%}">Увійти</a>
+                <a class="button is-primary" href="{%url 'account:signup'%}">Зареєструватись</a>
+            </div>
+        </div>
+      {%endif%}
+    </div>
+</nav>
+{%endblock%}
+
+{%block content%}
+<div id="content-div" >
+
+</div>
+{%endblock%}
+
+{%block footer%}
+<div class="box content is-flex is-justify-content-space-between is-align-items-center has-background-dark p-1">
+  <div class="buttons has-text-white m-0">
+    <a class="button is-rounded is-info is-outlined is-small" href="https://github.com/AstralMortem/Warrior-TKD">
+    <span class="icon is-small">
+      <i class="fa-brands fa-github"></i>
+    </span>
+    </a>
+  </div>
+  <p class="title is-5 has-text-white m-0">Автори сайту: МІСКЛІКЕРИ</p>
+  <p class="title is-5 has-text-white">Copyright © 2024</p>
+</div>
+{%endblock%}
+

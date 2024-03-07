@@ -1,0 +1,34 @@
+<div class="is-flex is-flex-direction-column is-justify-content-space-betwee container box mt-2">
+    <div class="content">
+        <p class="title">{{object.title}}</p>
+        <p class="subtitle">{{object.info}}</p>
+        <p class="subtitle">Категорія: <a>{{object.category.name}}</a></p>
+    </div>
+    <div class="columns">
+        <div class="content is-flex is-flex-direction-column column is-3 p-4">
+            <div class="is-flex is-justify-content-space-between is-align-items-end">
+                <p>Автор: <a class="is-underlined">{{object.squad.squad_name}}</a></p>
+                <img class="is-rounded" src="{{order.squad.get_photo}}" height="64" width="64">
+            </div>
+            <p class="subtitle is-6 mt-2">{{object.created_at|date:'d.m.Y H:i'}}</p>
+        </div>
+        <div class="column p-4">
+            {%if request.user.role.title == "Volunter"%}
+                <a class="button is-primary" hx-get="{%url 'orders:take' pk=object.id%}">Взяти запит</a>
+                <a class="button is-primary">Відкрити чат по запиту</a>
+            {% else %}
+                <a  hx-get="{%url 'orders:delete' pk=object.pk%}" 
+                    hx-target="#place-for-modal" 
+                    hx-swap="innerHTML"
+                    class="button is-danger">Видалити запит</a>
+                <a  hx-get="{%url 'orders:update' pk=object.pk%}" 
+                    hx-target="#content-detail" 
+                    hx-swap="innerHTML"
+                    class="button is-info">Редагувати</a>
+            {%endif%}
+        </div>
+    </div>
+    <div id="place-for-modal"></div>
+    
+    
+</div>

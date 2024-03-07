@@ -1,0 +1,11 @@
+
+<div class="is-flex is-flex-direction-column" style="overflow-y:auto;">
+    <p class="subtitle is-5">По категоріям</p>
+    {%for item in object_list%}
+        <a 
+        hx-get="{{path}}?category={{item.pk}}" class="button"
+        hx-target="#side-menu" 
+        hx-swap="innerHTML" >{{item.name}}</a>
+        
+    {%endfor%}
+</div>

@@ -1,0 +1,14 @@
+{% load crispy_forms_tags %}
+<div class="container box mt-2 mb-2">
+    <form hx-post="{{request.path}}" hx-target="#content-detail" hx-swap="innerHTML">
+        {% csrf_token %}
+        {{form|crispy}}
+
+        <div class="is-flex">
+            <button type="submit" class="button is-primary">Зберегти</button>
+            <a hx-get="{%url 'orders:detail' pk=object.pk%}" hx-swap="innerHTML" hx-target="#content-detail" class="button is-warning ml-2">Відміна</a>
+        </div>
+        
+    </form>
+        
+</div>
