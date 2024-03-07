@@ -130,3 +130,24 @@ article{
     bottom: -20px;
   }
 }
+
+
+#grid-orders ul {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap:10px;
+}
+
+#grid-findraising ul {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap:10px;
+}
+
+.gap-10{
+  gap:10px;
+}
+
+.gap-6{
+  gap:6px;
+}

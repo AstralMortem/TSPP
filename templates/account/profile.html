@@ -1,0 +1,108 @@
+<div class="container my-2 is-flex is-flex-direction-column">
+    <div class="box">
+        <div class="columns">
+            <div class="column is-3">
+                <figure class="image is-square">
+                    <img src="{{profile.get_photo}}" class="is-rounded">
+                </figure>
+            </div>
+            <div class="column">
+                {%if profile.user.get_role == 'Squad'%}
+                    <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+                        <div>
+                            <p class="title">{{profile.squad_name}}</p>
+                            <p class="subtitle">{{profile.squad_type.name}}</p>
+                        </div>
+                        <div>
+                            <a href="#" class="button is-info">Edit</a>
+                        </div>
+                    </div>
+                {%elif profile.user.get_role == 'Volunter'%}
+                    <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+                        <div>
+                            {%if profile.is_organisation%}
+                                <p class="title">{{profile.organization_name}} <span class="tag is-info">Організація</span></p>
+                            {%else%}
+                                <p class="title">{{profile.full_name}}</p>
+                            {%endif%}
+                            
+                            <p class="subtitle">{{profile.volunter_type.name}}</p>
+                        </div>
+                        <div>
+                            <a href="#" class="button is-info">Edit</a>
+                        </div>
+                    </div>
+                
+                    
+                {%endif%}
+
+                <hr/>
+                <div class="is-flex is-justify-content-space-evenly">
+                    <div class="box m-0">
+                        <p class="subtitle is-4">Пошта</p>
+                        <p class="subtitle is-5">{{profile.user.email}}</p>
+                    </div>
+                    <div class="box m-0">
+                        <p class="subtitle is-4">Телефон</p>
+                        <p class="subtitle is-5">{{profile.user.phone}}</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="box">
+        <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+            <p class="title is-3">Запити бригади</p>
+            <div class="field">
+                <p class="control has-icons-left">
+                  <input class="input" type="text" placeholder="Пошук" hx-get="{%url 'orders:list'%}" 
+                  name="search" 
+                  hx-target="#grid-orders"
+                  hx-swap="innerHTML"
+                  hx-trigger="keyup changed delay:1s">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </p>
+              </div>
+        </div>
+
+        
+        <div id="grid-orders">
+            <div hx-get="{%url 'orders:list'%}?initiator={{profile.pk}}" 
+            hx-swap="innerHTML" 
+            hx-target="#grid-orders"
+            hx-trigger="load"
+            class="button is-primary"></div>
+
+        </div>
+    </div>
+    <div class="box">
+        <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+            <p class="title is-3">Збори бригади</p>
+            <div class="field">
+                <p class="control has-icons-left">
+                  <input class="input" type="text" placeholder="Пошук" hx-get="{%url 'fundraising:list'%}" 
+                  name="search" 
+                  hx-target="#grid-fundraising"
+                  hx-swap="innerHTML"
+                  hx-trigger="keyup changed delay:1s">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </p>
+              </div>
+        </div>
+
+        
+        <div id="grid-fundraising">
+            <div hx-get="{%url 'fundraising:list'%}?initiator={{profile.pk}}" 
+            hx-swap="innerHTML" 
+            hx-target="#grid-fundraising"
+            hx-trigger="load"
+            class="button is-primary"></div>
+
+        </div>
+    </div>
+</div>

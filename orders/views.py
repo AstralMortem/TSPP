@@ -48,11 +48,14 @@ class OrdersListView(generic.ListView):
         qs = Order.objects.all()
         filter_search = self.request.GET.get("search")
         filter_category = self.request.GET.get("category")
+        filter_user = self.request.GET.get("initiator")
         if filter_search:
             qs = Order.objects.filter(title__icontains=filter_search)
         if filter_category:
             qs = Order.objects.filter(category__pk=filter_category)
-        if not filter_category and not filter_search:
+        if filter_user:
+            qs = Order.objects.filter(squad__pk=filter_user)
+        if not filter_category and not filter_search and not filter_user:
             return super().get_queryset()
         return qs
 

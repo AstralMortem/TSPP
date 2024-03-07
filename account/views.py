@@ -5,11 +5,23 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.views import LoginView
 from .forms import SquadCreate, VolunterCreate, UserCreate
+from .models import Admin, Squad, Volunter
 
 
 class UserLoginView(LoginView):
     redirect_authenticated_user = True
     template_name = "account/login.html"
+
+
+def user_profile(request):
+    user_role = request.user.role.title
+    if user_role == "Volunter":
+        profile = Volunter.objects.get(user=request.user)
+    elif user_role == "Squad":
+        profile = Squad.objects.get(user=request.user)
+    else:
+        profile = Admin.objects.get(user=request.user)
+    return render(request, "account/profile.html", {"profile": profile})
 
 
 def user_signup(request):
@@ -48,3 +60,11 @@ def user_signup_next(request, pk):
 
 def user_signup_complete(request):
     return render(request, "account/complete.html", {"step": 3})
+
+
+def user_orders(request):
+    return render(request, "account/orders.html")
+
+
+def user_fundraising(request):
+    return render(request, "account/fundraising.html")

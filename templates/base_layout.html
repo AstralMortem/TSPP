@@ -62,13 +62,13 @@
                             </span>
                     </a>
                     <div class="navbar-dropdown">
-                      <a class="navbar-item">
+                      <a class="navbar-item" hx-get="{%url 'account:profile'%}" hx-swap="innerHTML" hx-target="#content-div">
                         Профіль
                       </a>
-                      <a class="navbar-item">
+                      <a class="navbar-item" hx-get="{%url 'account:my-orders'%}" hx-swap="innerHTML" hx-target="#content-div">
                         Мої запити
                       </a>
-                      <a class="navbar-item">
+                      <a class="navbar-item" hx-get="{%url 'account:my-fundraising'%}" hx-swap="innerHTML" hx-target="#content-div">
                         Мої збори
                       </a>
                       <hr class="navbar-divider">

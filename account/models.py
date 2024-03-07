@@ -68,6 +68,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+    def get_photo(self):
+        if self.image:
+            return self.image.url
+        return "/static/img/no_image.png"
+
+    def get_role(self):
+        return self.role.title
+
 
 # admin user model
 class Admin(models.Model):
@@ -78,6 +86,11 @@ class Admin(models.Model):
 
     def __str__(self):
         return self.full_name
+
+    def get_photo(self):
+        if self.user.image:
+            return self.user.image.url
+        return "/static/img/no_image.png"
 
 
 class VolunterType(models.Model):
@@ -117,6 +130,11 @@ class Volunter(models.Model):
         if self.is_organisation:
             return self.organization_name
         return self.full_name
+
+    def get_photo(self):
+        if self.user.image:
+            return self.user.image.url
+        return "/static/img/no_image.png"
 
 
 # squad user model

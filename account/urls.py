@@ -1,6 +1,14 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from .views import UserLoginView, user_signup, user_signup_next, user_signup_complete
+from .views import (
+    UserLoginView,
+    user_signup,
+    user_signup_next,
+    user_signup_complete,
+    user_profile,
+    user_fundraising,
+    user_orders,
+)
 
 app_name = "account"
 
@@ -14,4 +22,7 @@ urlpatterns = [
     ),
     path("signup/complete", user_signup_complete, name="signup-complete"),
     path("signup/", user_signup, name="signup"),
+    path("profile/", user_profile, name="profile"),
+    path("profile/orders", user_orders, name="my-orders"),
+    path("profile/fundraising", user_fundraising, name="my-fundraising"),
 ]

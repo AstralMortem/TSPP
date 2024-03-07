@@ -1,31 +1,38 @@
 <div class="is-flex is-flex-direction-column is-justify-content-space-betwee container box mt-2">
     <div class="content">
-        <p class="title">{{object.title}}</p>
-        <p class="subtitle">{{object.info}}</p>
+        <div class="is-flex is-justify-content-space-between">
+            <div>
+                <p class="title">{{object.title}}</p>
+                <p class="subtitle">{{object.info}}</p>
+            </div>
+            <p class="title is-3">{{object.price}} UAH</p>
+        </div>
+
         <p class="subtitle">Категорія: <a>{{object.category.name}}</a></p>
     </div>
     <div class="columns">
-        <div class="content is-flex is-flex-direction-column column is-3 p-4">
-            <div class="is-flex is-justify-content-space-between is-align-items-end">
+        <div class="content is-flex is-flex-direction-column column p-4">
+            <div class="is-flex gap-10 is-align-items-center">
+                <img class="is-rounded" src="{{object.squad.get_photo}}" height="64" width="64">
                 <p>Автор: <a class="is-underlined">{{object.squad.squad_name}}</a></p>
-                <img class="is-rounded" src="{{order.squad.get_photo}}" height="64" width="64">
             </div>
-            <p class="subtitle is-6 mt-2">{{object.created_at|date:'d.m.Y H:i'}}</p>
         </div>
-        <div class="column p-4">
-            {%if request.user.role.title == "Squad"%}
+        <div class="column is-3 p-4">
+            <div class="is-flex gap-6 is-flex-direction-column ">
+            {%if request.user.pk == order.squad.pk%}
                 <a  hx-get="{%url 'fundraising:delete' pk=object.pk%}" 
                     hx-target="#place-for-modal" 
                     hx-swap="innerHTML"
-                    class="button is-danger">Видалити запит</a>
+                    class="button is-danger">Видалити збір</a>
                 <a  hx-get="{%url 'fundraising:update' pk=object.pk%}" 
                     hx-target="#content-detail" 
                     hx-swap="innerHTML"
                     class="button is-info">Редагувати</a>
             {%endif%}
+            </div>
         </div>
     </div>
     <div id="place-for-modal"></div>
-    
+    <p class="subtitle is-6 mt-2">{{object.created_at|date:'d.m.Y H:i'}}</p>
     
 </div>
