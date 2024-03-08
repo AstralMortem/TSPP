@@ -5,7 +5,14 @@
                 <p class="title">{{object.title}}</p>
                 <p class="subtitle">{{object.info}}</p>
             </div>
-            <p class="title is-3">{{object.price}} UAH</p>
+            <div class="is-flex is-flex-direction-column">
+                <p class="title is-3">{{object.price}} UAH</p>
+                <a hx-get="{%url 'fundraising:donate' fundraising_id=object.pk%}" 
+                    hx-swap="innerHTML" 
+                    hx-target="#content-detail" 
+                    class="is-primary button">Задонатити</a>
+            </div>
+            
         </div>
 
         <p class="subtitle">Категорія: <a>{{object.category.name}}</a></p>
@@ -32,7 +39,20 @@
             </div>
         </div>
     </div>
+    {%with donated_sum=object.get_donated_amount%}
+    <div class="is-flex is-flex-direction-column">
+        <p class="title is-5">Вже задонатили {{donated_sum}} ₴</p>
+        <progress class="progress is-primary" 
+        value="{{donated_sum| stringformat:'d'}}" 
+        max="{{object.price| stringformat:'d'}}"></progress>
+    </div>
+    {% endwith %}
+    <div class="is-flex is-justify-content-flex-end">
+        <p class="has-text-left subtitle is-6 mt-2">{{object.created_at|date:'d.m.Y H:i'}}</p>
+    </div>
+    
+    
     <div id="place-for-modal"></div>
-    <p class="subtitle is-6 mt-2">{{object.created_at|date:'d.m.Y H:i'}}</p>
+    
     
 </div>

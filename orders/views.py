@@ -4,7 +4,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views import generic
 
-from account.models import Squad
+from account.models import Squad, Volunter
 from .models import Category, Order
 from django import forms
 
@@ -20,9 +20,10 @@ def order_view(request):
     return render(request, "orders/orders_view.html")
 
 
-def take_order(request, order_id):
-    order = Order.objects.get(id=order_id)
-    order.volunter = request.user
+def take_order(request, pk):
+    order = Order.objects.get(pk=pk)
+    volunter_profile = Volunter.objects.get(pk=request.user.pk)
+    order.volunter = volunter_profile
     order.is_taken = True
     order.taked_at = timezone.now()
     order.save()
@@ -45,18 +46,16 @@ class OrdersListView(generic.ListView):
     template_name = "orders/list.html"
 
     def get_queryset(self):
-        qs = Order.objects.all()
+        qs = Order.objects.filter(is_taken=False)
         filter_search = self.request.GET.get("search")
         filter_category = self.request.GET.get("category")
         filter_user = self.request.GET.get("initiator")
         if filter_search:
-            qs = Order.objects.filter(title__icontains=filter_search)
+            qs = qs.filter(title__icontains=filter_search)
         if filter_category:
-            qs = Order.objects.filter(category__pk=filter_category)
+            qs = qs.filter(category__pk=filter_category)
         if filter_user:
-            qs = Order.objects.filter(squad__pk=filter_user)
-        if not filter_category and not filter_search and not filter_user:
-            return super().get_queryset()
+            qs = qs.filter(squad__pk=filter_user)
         return qs
 
 

@@ -3,9 +3,9 @@
     <div class="column is-3 is-flex is-flex-direction-column">
             <div class="is-sticked box mt-2" style="z-index:10;">
                 <div class="is-flex is-justify-content-space-evenly is-align-items-flex-start">
-                  <p class="subtitle is-4 has-text-centered is-sticked">Збори</p>
+                <p class="subtitle is-4 has-text-centered is-sticked">Бригади</p>
                   <a class="button is-primary is-outlined" id="filter-button" onclick="toggleColumn('filter-column')"
-                  hx-get="{%url 'fundraising:category'%}" 
+                  hx-get="{%url 'account:squad-category'%}" 
                   hx-swap="innerHTML" 
                   hx-target="#filter">
                     <span class="icon is-small">
@@ -16,7 +16,7 @@
                 
                 <div class="field">
                     <p class="control has-icons-left">
-                      <input class="input" type="text" placeholder="Пошук" hx-get="{%url 'fundraising:list'%}" 
+                      <input class="input" type="text" placeholder="Пошук" hx-get="{%url 'account:squad-list'%}" 
                       name="search" 
                       hx-target="#side-menu"
                       hx-swap="innerHTML"
@@ -29,7 +29,7 @@
             </div>
             
             <aside id="side-menu" style="overflow-y:auto;" class="content-size">
-                    <div hx-get="{%url 'fundraising:list'%}" hx-trigger="load" hx-target="#side-menu" hx-swap="innerHTML">
+                    <div hx-get="{%url 'account:squad-list'%}" hx-trigger="load" hx-target="#side-menu" hx-swap="innerHTML">
                     </div>
             </aside>
     </div>
@@ -47,8 +47,7 @@
         <div id="filter"></div>
       </div>
     </div>
-</div>
-
+</div> 
 
 <script>
   function toggleColumn(id){

@@ -6,6 +6,7 @@ from .views import (
     FundraisingListView,
     FundraisingUpdateView,
     FundraisingCategoryListView,
+    Donate,
     fundraising_view,
 )
 
@@ -22,4 +23,5 @@ urlpatterns = [
         "fundraising/<int:pk>/change/", FundraisingUpdateView.as_view(), name="update"
     ),
     path("fundraising/<int:pk>/delete", FundraisingDeleteView.as_view(), name="delete"),
+    path("donate/<int:fundraising_id>/", Donate.as_view(), name="donate"),
 ]

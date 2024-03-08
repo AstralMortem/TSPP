@@ -1,11 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.contrib.auth.views import LoginView
 from .forms import SquadCreate, VolunterCreate, UserCreate
-from .models import Admin, Squad, Volunter
+from .models import Admin, Squad, SquadType, Volunter
 
 
 class UserLoginView(LoginView):
@@ -68,3 +68,47 @@ def user_orders(request):
 
 def user_fundraising(request):
     return render(request, "account/fundraising.html")
+
+
+class SquadCategory(generic.ListView):
+    model = SquadType
+    template_name = "components/category.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["path"] = reverse("account:squad-list")
+        return context
+
+
+class SquadListView(generic.ListView):
+    paginate_by = 4
+    model = Squad
+    template_name = "account/squad_list.html"
+
+    def get_queryset(self):
+        qs = self.model.objects.all()
+        filter_search = self.request.GET.get("search")
+        filter_category = self.request.GET.get("category")
+
+        if filter_search:
+            qs = self.model.objects.filter(squad_name__icontains=filter_search)
+        if filter_category:
+            qs = self.model.objects.filter(squad_type__pk=filter_category)
+
+        if not filter_category and not filter_search:
+            return super().get_queryset()
+        return qs
+
+
+class SquadDetailView(generic.DetailView):
+    template_name = "account/profile.html"
+    context_object_name = "profile"
+    model = Squad
+
+
+def squad_view(request):
+    return render(request, "account/squad_view.html")
+
+
+def volunter_view(request):
+    return render(request, "account/volunter_view.html")

@@ -1,13 +1,35 @@
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
-from .models import Fundraising
+from .models import Fundraising, Transaction
 from account.models import Squad
 from orders.models import Category
 
 
 def fundraising_view(request):
     return render(request, "fundraising/fundraising_view.html")
+
+
+class Donate(generic.CreateView):
+    model = Transaction
+    fields = ["amount"]
+    template_name = "fundraising/donate_form.html"
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form = form.save(commit=False)
+        form.fundraising = Fundraising.objects.get(pk=self.kwargs.get("fundraising_id"))
+        form.user = self.request.user
+        print(self.kwargs)
+        form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+
+        return reverse(
+            "fundraising:detail", kwargs={"pk": self.kwargs.get("fundraising_id")}
+        )
 
 
 class FundraisingCategoryListView(generic.ListView):

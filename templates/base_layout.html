@@ -25,7 +25,7 @@
           Збори коштів
         </a>
 
-        <a class="navbar-item">
+        <a class="navbar-item" hx-get="{%url 'account:squad-view'%}" hx-target="#content-div" hx-swap="innerHTML">
             Військові бригади
         </a>
 
@@ -36,12 +36,14 @@
 
       <div class="navbar-end">
 
+        {%if request.user.role.name == "Squad"%}
         <div class="navbar-item">
             <div class="buttons">
                 <a class="button is-info" hx-get="{%url 'orders:add'%}" hx-swap="innerHTML" hx-target="#content-div">Створити запит</a>
                 <a class="button is-primary" hx-get="{%url 'fundraising:add'%}"  hx-swap="innerHTML" hx-target="#content-div">Створити збір</a>
             </div>
         </div>
+        {%endif%}
 
         <div class="navbar-item">
             <div class="buttons">
