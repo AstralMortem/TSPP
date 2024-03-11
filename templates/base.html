@@ -8,7 +8,15 @@
     {%endblock%}
     <title>{{title}}</title>
 </head>
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-ext="ws">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="notification is-{{message.tags}}">
+            <button class="delete"></button>
+            {{message}}
+        </div>
+        {% endfor %}
+    {% endif %}
     <header>
         {%block header%}
         {%endblock%}

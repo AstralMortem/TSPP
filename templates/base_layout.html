@@ -52,7 +52,7 @@
                         <i class="fa-regular fa-bell"></i>
                     </span>
                 </a>
-                <a class="button is-rounded is-small">
+                <a class="button is-rounded is-small" hx-get="{%url 'chat:lobby-view'%}" hx-swap="innerHTML" hx-target="#content-div">
                     <span class="icon is-small">
                         <i class="fa-regular fa-envelope"></i>
                     </span>

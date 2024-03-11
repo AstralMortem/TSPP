@@ -8,6 +8,7 @@ from django.contrib.auth.models import (
 )
 from django.utils.translation import gettext_lazy as _
 from django.contrib.staticfiles import finders
+from channels.db import database_sync_to_async
 
 
 # Base auth manager

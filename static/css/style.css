@@ -42,7 +42,7 @@ article{
 
 
 .content-column{
-  height: calc(100vh - 100px);
+  height: calc(100vh - 130px);
 }
 
 
@@ -150,4 +150,8 @@ article{
 
 .gap-6{
   gap:6px;
+}
+
+.messages{
+  width: fit-content;
 }
