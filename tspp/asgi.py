@@ -6,7 +6,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tspp.settings")
 
 
-from chat import urls
+from chat_depricated import urls
 
 
 application = ProtocolTypeRouter(
