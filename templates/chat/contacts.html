@@ -1,0 +1,27 @@
+<ul class="is-overflowed" id="side-ul">
+    {%for user in users%}
+        <li class="mb-2">
+            <div class="card is-clickable p-2 card-hovered" hx-post="{%url 'chat:create' user_id=user.pk%}" hx-target="#content-detail" hx-swap="innerHTML" hx-trigger="click">
+                <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+                    
+                    <figure class="image is-64x64">
+                        <img src="{{ user.get_photo}}" class="is-rounded">
+                    </figure>
+                    
+                    
+                    <div class="is-flex is-flex-direction-column is-shrink-0">
+                        <p>{{user.get_profile}}</p>
+                        {%with role=user.get_role%}
+                        <p class="tag {%if role == 'Volunter'%}is-primary{%elif role == 'Squad'%}is-warning{%else%}is-info{%endif%}">{{role}}</p>
+                        {%endwith%}
+                    </div>
+                </div>
+            </div>
+        </li>
+    {%empty%}
+        <p>Нажаль тут нічого немає</p>
+    {%endfor%}
+</ul>
+{%if page_obj.has_next%}
+    <button class="button is-primary" hx-get="{{request.path}}?page={{page_obj.next_page_number}}" hx-trigger="click" hx-swap="outerHTML" hx-targe="side-ul">Далі...</button>
+{%endif%}

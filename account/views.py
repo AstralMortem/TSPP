@@ -46,8 +46,11 @@ def user_signup_next(request, pk):
     if request.method == "POST":
         if base_user.role.title == "Volunter":
             form = VolunterCreate(request.POST)
+            base_user.is_active = True
+            base_user.save()
         elif base_user.role.title == "Squad":
             form = SquadCreate(request.POST)
+
         if form.is_valid():
             user = form.save(commit=False)
             user.user = base_user

@@ -34,7 +34,7 @@ MY_APPS = [
     "account",
     "orders",
     "fundraising",
-    "chat_depricated",
+    "chat",
 ]
 
 THIRD_PARTY = [

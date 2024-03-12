@@ -46,22 +46,25 @@
                             <a href="#" class="dropdown-item" hx-get={%url 'orders:untake-contractor' pk=object.pk%}>
                                 Вилучити виконавця
                             </a>
-                            <hr class="dropdown-divider">
+                            
                             {%endif%}
-                        
-                            <a class="dropdown-item">
-                            Відкрити чат по запиту
-                            </a>
+                            {%if object.is_taken and object.is_completed%}
+                            <hr class="dropdown-divider">
+                                <a class="dropdown-item">
+                                Відкрити чат по запиту
+                                </a>
+                            {%endif%}  
                         {%else%}
-                        <a class="dropdown-item">
-                            Відкрити чат по запиту
-                            </a>
+                            {%if object.is_taken and object.is_competed%}
+                            <a class="dropdown-item">
+                                Відкрити чат по запиту
+                                </a>
+                            {%endif%}
                         {%endif%}
+                        
                       </div>
                     </div>
                   </div>
-
-                
             </div>
         </div>
     </div>

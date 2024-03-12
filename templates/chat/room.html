@@ -1,0 +1,55 @@
+
+<div class="box mt-2 content-column is-flex is-flex-direction-column ">
+    <header class="chat-header">
+        <h2 class="title is-3">{{ chat_room }}</h2>
+        <p class="subtitle is-6">Код чату: {{ chat_room.pk}}</p>
+        <hr/>
+    </header>
+    <article class="chat-article">
+        <div id='messages' class="is-flex is-flex-direction-column is-align-content-stretch">
+            {%for message in messages%}
+            <div id='message-{{message.sender.pk}}' class='notification p-1'>
+                <p class='title is-5'><b>{{message.username}}</b></p>
+                {{message.message}}
+            </div>
+            
+            {%endfor%}
+        </div>
+    </article>
+    <footer class="chat-footer">
+        <div hx-ws="connect:/chat/{{chat_room.pk}}"> 
+            <form hx-ws="send:submit" class="columns" id="chat-form" >
+                <div class="field column">
+                    <div class="control">
+                        <input name="message" id="chat-message" class="input" placeholder="Напишіть щось" >
+                    </div>
+                </div>
+                <div class="column is-2 is-flex is-flex-direction-row">
+                    <input type="submit" class="button is-primary" id="chat-send-button" >
+                </div>
+            </form>  
+        </div> 
+    </footer>
+</div>
+<style>
+    #message-{{request.user.pk}}{
+        background-color: hsl(171, 100%, 41%);
+        align-self: flex-end !important;
+    }
+</style>
+
+<script>
+    document.getElementById("chat-form").addEventListener("submit", function(event){
+        const message = document.getElementById("chat-message")
+        message.value = ""
+      });
+
+    htmx.on("#chat-send-button",'click',function(e){
+        setTimeout(function(){
+            document.getElementById('messages').scrollIntoView({ block: 'end' });
+        },100)
+        
+    })
+    
+</script>
+    

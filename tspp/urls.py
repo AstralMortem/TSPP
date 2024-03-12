@@ -37,7 +37,7 @@ urlpatterns = [
     path("cabinet/", include("orders.urls"), name="orders"),
     path("cabinet/", include("fundraising.urls"), name="fundraising"),
     path("", index, name="home"),
-    path("chat/", include("chat_depricated.urls"), name="chat"),
+    path("chat/", include("chat.urls"), name="chat"),
 ]
 
 

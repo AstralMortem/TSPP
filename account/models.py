@@ -77,6 +77,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_role(self):
         return self.role.title
 
+    def get_profile(self):
+        if self.get_role() == "Volunter":
+            return Volunter.objects.get(user=self)
+        elif self.get_role() == "Squad":
+            return Squad.objects.get(user=self)
+        elif self.get_role() == "Admin":
+            return Admin.objects.get(user=self)
+        return self.email
+
 
 # admin user model
 class Admin(models.Model):

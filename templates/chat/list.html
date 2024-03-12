@@ -1,0 +1,36 @@
+<ul class="is-overflowed" id="side-ul">
+    {%for chat in object_list%}
+        <li class="mb-2">
+            <div class="card is-clickable p-2 card-hovered" hx-get="{%url 'chat:join' chat_id=chat.pk%}" hx-target="#content-detail" hx-swap="innerHTML" hx-trigger="click">
+                <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+                    
+                    <figure class="image is-64x64">
+                        <img src="{%if chat.user1 == request.user%}{{chat.user2.get_photo}}{%else%}{{chat.user1.get_photo}}{%endif%}" class="is-rounded">
+                    </figure>
+                    
+                    
+                    <div class="is-flex is-flex-direction-column is-shrink-0">
+                        {%if chat.user1 == request.user%}
+                            <p>{{chat.user2.get_profile}}</p>
+                            {%with role=chat.user2.get_role%}
+                                <p class="tag {%if role == 'Volunter'%}is-primary{%elif role == 'Squad'%}is-warning{%else%}is-info{%endif%}">{{role}}</p>
+                            {%endwith%}
+                        {%else%}
+                            <p>{{chat.user1.get_profile}}</p>
+                            {%with role=chat.user1.get_role%}
+                                <p class="tag {%if role == 'Volunter'%}is-primary{%elif role == 'Squad'%}is-warning{%else%}is-info{%endif%}">{{role}}</p>
+                            {%endwith%}
+                        {%endif%}
+    
+                    </div>
+                </div>
+                
+            </div>
+        </li>
+    {%empty%}
+        <p>Нажаль тут нічого немає</p>
+    {%endfor%}
+</ul>
+{%if page_obj.has_next%}
+    <button class="button is-primary" hx-get="{{request.path}}?page={{page_obj.next_page_number}}" hx-trigger="click" hx-swap="outerHTML" hx-targe="side-ul">Далі...</button>
+{%endif%}

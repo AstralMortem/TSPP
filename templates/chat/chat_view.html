@@ -1,0 +1,69 @@
+<div class="columns">
+    <div class="column is-4 is-hidden" id="filter-column">
+      <div class="box mt-2">
+        <p class="title is-5">Контакти</p>
+        <div class="field">
+          <p class="control has-icons-left">
+            <input class="input" type="text" placeholder="Пошук контактів" hx-get="{%url 'chat:contacts'%}" 
+            name="search" 
+            hx-target="#filter"
+            hx-swap="innerHTML"
+            hx-trigger="keyup changed delay:1s">
+            <span class="icon is-small is-left">
+              <i class="fas fa-search"></i>
+            </span>
+          </p>
+      </div>
+        <div id="filter"></div>
+      </div>
+    </div>
+    <div class="column is-3 is-flex is-flex-direction-column">
+            <div class="is-sticked box mt-2" style="z-index:10;">
+                <div class="is-flex is-justify-content-space-evenly">
+                  <p class="subtitle is-4 has-text-centered is-sticked">Чати</p>
+                  <a class="button is-primary is-outlined" id="filter-button" onclick="toggleColumn('filter-column')"
+                  hx-get="{%url 'chat:contacts'%}" 
+                  hx-swap="innerHTML" 
+                  hx-target="#filter">
+                    <span class="icon is-small">
+                      <i class="fa-solid fa-users"></i>
+                    </span>
+                  </a>
+                </div>
+                
+                <div class="field">
+                    <p class="control has-icons-left">
+                      <input class="input" type="text" placeholder="Пошук" hx-get="/" 
+                      name="search" 
+                      hx-target="#side-menu"
+                      hx-swap="innerHTML"
+                      hx-trigger="keyup changed delay:1s">
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-search"></i>
+                      </span>
+                    </p>
+                </div>
+              </div>
+            
+            <aside id="side-menu" style="overflow-y:auto;" class="content-size">
+                    <div hx-get="{%url 'chat:list'%}" hx-trigger="load" hx-target="#side-menu" hx-swap="innerHTML">
+                    </div> 
+            </aside>
+    </div>
+    <div class="column" id="content-detail" >
+        <div class="columns is-vcentered">
+          <div class="has-text-centered column ">
+            <p>Будь-ласка виберіть щось</p>
+          </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+  function toggleColumn(id){
+    const col = document.getElementById(id)
+    col.classList.toggle("is-hidden")
+  }
+</script>
