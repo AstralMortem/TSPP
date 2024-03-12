@@ -70,9 +70,11 @@
                       <a class="navbar-item" hx-get="{%url 'orders:my-view'%}" hx-swap="innerHTML" hx-target="#content-div">
                         Мої запити
                       </a>
-                      <a class="navbar-item" hx-get="" hx-swap="innerHTML" hx-target="#content-div">
-                        Мої збори
-                      </a>
+                      {%if request.user.role.title == "Squad"%}
+                        <a class="navbar-item" hx-get="{%url 'fundraising:my-view'%}" hx-swap="innerHTML" hx-target="#content-div">
+                          Мої збори
+                        </a>
+                      {%endif%}
                       <hr class="navbar-divider">
                       <form action="{%url 'account:logout'%}" method="POST" class="navbar-item">
                         {% csrf_token %}

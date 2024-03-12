@@ -1,0 +1,75 @@
+<div class="is-flex is-flex-direction-column is-justify-content-space-betwee container box mt-2">
+    <div class="content">
+        <div class="is-flex is-justify-content-space-between">
+            <div>
+                <p class="title">{{object.title}}</p>
+                <p class="subtitle">{{object.info}}</p>
+            </div>
+            <div class="is-flex is-flex-direction-column">
+                <p class="title is-3">{{object.price}} UAH</p>
+                <a hx-get="{%url 'fundraising:donate' fundraising_id=object.pk%}" 
+                    hx-swap="innerHTML" 
+                    hx-target="#content-detail" 
+                    class="is-primary button">Задонатити</a>
+            </div>
+            
+        </div>
+
+        <p class="subtitle">Категорія: <a>{{object.category.name}}</a></p>
+    </div>
+    <div class="columns">
+        <div class="content is-flex is-flex-direction-column column p-4">
+            <div class="is-flex gap-10 is-align-items-center">
+                <img class="is-rounded" src="{{object.squad.get_photo}}" height="64" width="64">
+                <p>Автор: <a class="is-underlined">{{object.squad.squad_name}}</a></p>
+            </div>
+        </div>
+        <div class="column is-3 p-4">
+            <div class="is-flex gap-6 is-flex-direction-column ">
+                <a  hx-get="{%url 'fundraising:delete' pk=object.pk%}" 
+                    hx-target="#place-for-modal" 
+                    hx-swap="innerHTML"
+                    class="button is-danger">Видалити збір</a>
+                <a  hx-get="{%url 'fundraising:update' pk=object.pk%}" 
+                    hx-target="#content-detail" 
+                    hx-swap="innerHTML"
+                    class="button is-info">Редагувати</a>
+                <div class="dropdown is-hoverable">
+                    <div class="dropdown-trigger">
+                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span>Більше</span>
+                            <span class="icon is-small">
+                              <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                          <div class="dropdown-content">
+                            <a class="dropdown-item">
+                                <a class="dropdown-item" hx-get="{%url 'fundraising:complete' pk=object.pk%}">
+                                    Закрити збір
+                                </a>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+    {%with donated_sum=object.get_donated_amount%}
+    <div class="is-flex is-flex-direction-column">
+        <p class="title is-5">Вже задонатили {{donated_sum}} ₴</p>
+        <progress class="progress is-primary" 
+        value="{{donated_sum| stringformat:'d'}}" 
+        max="{{object.price| stringformat:'d'}}"></progress>
+    </div>
+    {% endwith %}
+    <div class="is-flex is-justify-content-flex-end">
+        <p class="has-text-left subtitle is-6 mt-2">{{object.created_at|date:'d.m.Y H:i'}}</p>
+    </div>
+    
+    
+    <div id="place-for-modal"></div>
+    
+    
+</div>

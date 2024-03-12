@@ -2,6 +2,7 @@ from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.views import generic
 from .models import Fundraising, Transaction
 from account.models import Squad
@@ -94,3 +95,23 @@ class FundraisingUpdateView(generic.UpdateView):
     def get_success_url(self) -> str:
         obj = self.get_object()
         return reverse_lazy("fundraising:detail", kwargs={"pk": obj.pk})
+
+
+class MyFundraisingListView(FundraisingListView):
+    template_name = "my_fundraising/my_fundraising_list.html"
+
+
+class MyFundraisingDetailView(FundraisingDetailView):
+    template_name = "my_fundraising/my_fundraising_detail.html"
+
+
+def my_fundraising_view(request):
+    return render(request, "my_fundraising/my_fundraising_view.html")
+
+
+def complete(request, pk):
+    fund = Fundraising.objects.get(pk=pk)
+    fund.is_completed = True
+    fund.completed_at = timezone.now()
+    fund.save()
+    return HttpResponse("Закрити з сумою " + str(fund.get_donated_amount()))
