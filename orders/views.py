@@ -1,3 +1,4 @@
+from turtle import title
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
@@ -28,6 +29,32 @@ def take_order(request, pk):
     order.taked_at = timezone.now()
     order.save()
     return HttpResponse("Упішно взято")
+
+
+def untake_order(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.volunter = None
+    order.is_taken = False
+    order.taked_at = None
+    order.save()
+    return HttpResponse("Упішно вилучено")
+
+
+def remove_contractor(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.volunter = None
+    order.is_taken = False
+    order.taked_at = None
+    order.save()
+    return HttpResponse("Упішно вилучено")
+
+
+def mark_completed(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.completed_at = timezone.now()
+    order.is_completed = True
+    order.save()
+    return HttpResponse("Упішно виконано")
 
 
 class OrdersCategoryListView(generic.ListView):
@@ -67,7 +94,7 @@ class OrdersDetailView(generic.DetailView):
 class OrdersDeleteView(generic.DeleteView):
     model = Order
     template_name = "components/delete_form.html"
-    success_url = reverse_lazy("orders:orders-view")
+    success_url = reverse_lazy("orders:view")
 
 
 class OrdersCreateView(generic.CreateView):
@@ -90,3 +117,28 @@ class OrdersUpdateView(generic.UpdateView):
     def get_success_url(self) -> str:
         obj = self.get_object()
         return reverse_lazy("orders:detail", kwargs={"pk": obj.pk})
+
+
+class MyOrdersListView(OrdersListView):
+    template_name = "my_orders/my_orders_list.html"
+
+    def get_queryset(self):
+        filter_search = self.request.GET.get("search")
+        user = self.request.user
+        qs = self.model.objects.all()
+        role = user.get_role()
+        if role == "Volunter":
+            qs = qs.filter(volunter__pk=user.pk)
+        elif role == "Squad":
+            qs = qs.filter(squad__pk=user.pk)
+        if filter_search:
+            qs = qs.filter(title__icontains=filter_search)
+        return qs
+
+
+class MyOrdersDetailView(OrdersDetailView):
+    template_name = "my_orders/my_orders_detail.html"
+
+
+def my_orders_view(request):
+    return render(request, "my_orders/my_orders_view.html")

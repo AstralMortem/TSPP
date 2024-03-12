@@ -3,7 +3,7 @@
     <p class="subtitle is-5">По категоріям</p>
     {%for item in object_list%}
         <a 
-        hx-get="{%url 'orders:list'%}?category={{item.pk}}" class="button"
+        hx-get="{%url 'orders:list'%}?category={{item.pk}}" class="button has-text-left mb-2"
         hx-target="#side-menu" 
         hx-swap="innerHTML" >{{item.name}}</a>
         

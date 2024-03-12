@@ -6,7 +6,7 @@
                     <p class="subtitle is-6">{{order.info|truncatechars:40}}</p>
                     <div class="is-flex is-justify-content-space-between is-flex-direction-row is-align-items-flex-end">
                         <p>{{order.created_at|date:'d.m.Y'}}</p>
-                        <a class="button is-text" href="/">
+                        <a class="button is-text" hx-get="{%url 'account:squad-detail' pk=user.pk%}" hx-target="#content-detail" hx-swap="innerHTML">
                            <span class="mr-2">
                                 <p>{{order.squad.squad_name}}</p>
                            </span>

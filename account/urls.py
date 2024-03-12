@@ -6,8 +6,6 @@ from .views import (
     user_signup_next,
     user_signup_complete,
     user_profile,
-    user_fundraising,
-    user_orders,
     squad_view,
     SquadDetailView,
     SquadListView,
@@ -25,8 +23,6 @@ urlpatterns = [
     path("signup/", user_signup, name="signup"),
     # profile
     path("profile/", user_profile, name="profile"),
-    path("profile/orders", user_orders, name="my-orders"),
-    path("profile/fundraising", user_fundraising, name="my-fundraising"),
     # squad
     path("squad/view/", squad_view, name="squad-view"),
     path("squad/category/", SquadCategory.as_view(), name="squad-category"),

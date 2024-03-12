@@ -1,9 +1,12 @@
 from django.contrib.auth import get_user_model
+from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.contrib.auth.views import LoginView
+
+from orders.models import Order
 from .forms import SquadCreate, VolunterCreate, UserCreate
 from .models import Admin, Squad, SquadType, Volunter
 
@@ -60,14 +63,6 @@ def user_signup_next(request, pk):
 
 def user_signup_complete(request):
     return render(request, "account/complete.html", {"step": 3})
-
-
-def user_orders(request):
-    return render(request, "account/orders.html")
-
-
-def user_fundraising(request):
-    return render(request, "account/fundraising.html")
 
 
 class SquadCategory(generic.ListView):

@@ -26,7 +26,7 @@
         </div>
         <div class="column is-3 p-4">
             <div class="is-flex gap-6 is-flex-direction-column ">
-            {%if request.user.pk == order.squad.pk%}
+            {%if request.user.pk == object.squad.pk%}
                 <a  hx-get="{%url 'fundraising:delete' pk=object.pk%}" 
                     hx-target="#place-for-modal" 
                     hx-swap="innerHTML"

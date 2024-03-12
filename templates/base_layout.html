@@ -36,7 +36,7 @@
 
       <div class="navbar-end">
 
-        {%if request.user.role.name == "Squad"%}
+        {%if request.user.role.title == "Squad"%}
         <div class="navbar-item">
             <div class="buttons">
                 <a class="button is-info" hx-get="{%url 'orders:add'%}" hx-swap="innerHTML" hx-target="#content-div">Створити запит</a>
@@ -67,10 +67,10 @@
                       <a class="navbar-item" hx-get="{%url 'account:profile'%}" hx-swap="innerHTML" hx-target="#content-div">
                         Профіль
                       </a>
-                      <a class="navbar-item" hx-get="{%url 'account:my-orders'%}" hx-swap="innerHTML" hx-target="#content-div">
+                      <a class="navbar-item" hx-get="{%url 'orders:my-view'%}" hx-swap="innerHTML" hx-target="#content-div">
                         Мої запити
                       </a>
-                      <a class="navbar-item" hx-get="{%url 'account:my-fundraising'%}" hx-swap="innerHTML" hx-target="#content-div">
+                      <a class="navbar-item" hx-get="" hx-swap="innerHTML" hx-target="#content-div">
                         Мої збори
                       </a>
                       <hr class="navbar-divider">

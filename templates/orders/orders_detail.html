@@ -2,20 +2,22 @@
     <div class="content">
         <p class="title">{{object.title}}</p>
         <p class="subtitle">{{object.info}}</p>
-        <p class="subtitle">Категорія: <a>{{object.category.name}}</a></p>
+        <p class="subtitle">Категорія: <a hx-get="{%url 'orders:list'%}?category={{object.category.pk}}"
+            hx-target="#side-menu" 
+            hx-swap="innerHTML">{{object.category.name}}</a></p>
     </div>
     <div class="columns">
         <div class="content is-flex is-flex-direction-column column p-4">
             <div class="is-flex gap-10 is-align-items-center">
                 <img class="is-rounded" src="{{order.squad.get_photo}}" height="64" width="64">
-                <p>Автор: <a class="is-underlined">{{object.squad.squad_name}}</a></p>
+                <p>Автор: <a class="is-underlined" hx-get="{%url 'account:squad-detail' pk=object.squad.pk%}" hx-target="#content-detail" hx-swap="innerHTML">{{object.squad.squad_name}}</a></p>
             </div>
         </div>
         <div class="column is-3 p-4">
             <div class="is-flex gap-6 is-flex-direction-column ">
             {%if request.user.role.title == "Volunter"%}
                 <a class="button is-primary" hx-get="{%url 'orders:take' pk=object.id%}">Взяти запит</a>
-                <a class="button is-primary">Відкрити чат по запиту</a>
+                <a class="button is-primary">Відкрити чат</a>
             {%endif%}
             {%if request.user.pk == order.squad.pk%}
                 <a  hx-get="{%url 'orders:delete' pk=object.pk%}" 
@@ -27,6 +29,7 @@
                     hx-swap="innerHTML"
                     class="button is-info">Редагувати</a>
             {%endif%}
+                
             </div>
         </div>
     </div>

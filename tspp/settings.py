@@ -20,6 +20,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -164,4 +165,35 @@ LOGGING = {
         "handlers": ["console"],
         "level": "INFO",
     },
+}
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Admin",
+    "site_header": "Admin",
+    "site_brand": "Admin",
+    # "site_logo": "img/logo.jpg",
+    "welcome_sign": "Вітаю в Адмін панелі сайту ---",
+    "copyright": "---",
+    "user_avatar": "get_photo",
+    "site_logo_classes": "img-circle",
+    "custom_js": "js/script.js",
+    # TOP MENU
+    # SIDE MENU
+    # "icons":{
+    #     "account.BaseUser": "fas fa-user",
+    #     "events.Competition": "fas fa-trophy",
+    #     "events.Attestation": "fas fa-graduation-cap",
+    #     "gyms.Gym": "fas fa-dumbbell",
+    #     "gyms.Group": "fas fa-users",
+    #     "news.News": "fas fa-newspaper",
+    #     "attendance.Attendance": "fas fa-bookmark",
+    #     "account.Belt": "fas fa-bacon",
+    # },
+    # "related_modal_active": True,
+    # "hide_models": ['auth.Group','admin_tools_stats.DashboardStats','admin_tools_stats.DashboardStatsCriteria', 'admin_tools_stats.CachedValue'],
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "flatly",
 }

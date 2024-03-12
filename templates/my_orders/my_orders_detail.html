@@ -1,0 +1,71 @@
+<div class="is-flex is-flex-direction-column is-justify-content-space-betwee container box mt-2">
+    <div class="content">
+        <p class="title">{{object.title}}</p>
+        <p class="subtitle">{{object.info}}</p>
+        <p class="subtitle">Категорія: <a>{{object.category.name}}</a></p>
+    </div>
+    <div class="columns">
+        <div class="content is-flex is-flex-direction-column column p-4">
+            <div class="is-flex gap-10 is-align-items-center">
+                <img class="is-rounded" src="{{object.squad.get_photo}}" height="64" width="64">
+                <p>Автор: <a class="is-underlined">{{object.squad.squad_name}}</a></p>
+            </div>
+        </div>
+        <div class="column is-3 p-4">
+            <div class="is-flex gap-6 is-flex-direction-column ">
+                {%if request.user.get_role ==  "Squad"%}
+                <a  hx-get="{%url 'orders:delete' pk=object.pk%}" 
+                    hx-target="#place-for-modal" 
+                    hx-swap="innerHTML"
+                    class="button is-danger">Видалити запит</a>
+                <a  hx-get="{%url 'orders:update' pk=object.pk%}" 
+                    hx-target="#content-detail" 
+                    hx-swap="innerHTML"
+                    class="button is-info">Редагувати</a> 
+                {%else%}
+                    {%if object.is_taken and not object.is_completed%}
+                        <a class="button is-warning" hx-get={%url 'orders:untake' pk=object.pk%}>Відмовитись від запиту</a> 
+                    {%endif%}
+                {%endif%}
+                <div class="dropdown is-hoverable">
+                    <div class="dropdown-trigger">
+                      <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                        <span>Більше</span>
+                        <span class="icon is-small">
+                          <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                      <div class="dropdown-content">
+                        {%if request.user.get_role == "Squad"%}
+                            {%if object.is_taken and not object.is_completed%}
+                            <a class="dropdown-item" hx-get={%url 'orders:complete' pk=object.pk%}>
+                                Помітити виконаним
+                            </a>
+                            <a href="#" class="dropdown-item" hx-get={%url 'orders:untake-contractor' pk=object.pk%}>
+                                Вилучити виконавця
+                            </a>
+                            <hr class="dropdown-divider">
+                            {%endif%}
+                        
+                            <a class="dropdown-item">
+                            Відкрити чат по запиту
+                            </a>
+                        {%else%}
+                        <a class="dropdown-item">
+                            Відкрити чат по запиту
+                            </a>
+                        {%endif%}
+                      </div>
+                    </div>
+                  </div>
+
+                
+            </div>
+        </div>
+    </div>
+    <div id="place-for-modal"></div>
+    <p class="subtitle is-6 mt-2">{{object.created_at|date:'d.m.Y H:i'}}</p>
+    
+</div>
