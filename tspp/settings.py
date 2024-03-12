@@ -177,7 +177,7 @@ JAZZMIN_SETTINGS = {
     "copyright": "---",
     "user_avatar": "get_photo",
     "site_logo_classes": "img-circle",
-    "custom_js": "js/script.js",
+    "custom_js": "js/admin.js",
     # TOP MENU
     # SIDE MENU
     # "icons":{
