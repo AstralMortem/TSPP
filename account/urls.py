@@ -3,6 +3,7 @@ from django.contrib.auth.views import LogoutView
 from .views import (
     UserLoginView,
     VolunterCategory,
+    user_change,
     user_signup,
     user_signup_next,
     user_signup_complete,
@@ -27,6 +28,7 @@ urlpatterns = [
     path("signup/", user_signup, name="signup"),
     # profile
     path("profile/", user_profile, name="profile"),
+    path("profile/update", user_change, name="profile-update"),
     # squad
     path("squad/view/", squad_view, name="squad-view"),
     path("squad/category/", SquadCategory.as_view(), name="squad-category"),

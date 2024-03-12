@@ -8,7 +8,14 @@ from django.views import generic
 from django.contrib.auth.views import LoginView
 
 from orders.models import Order
-from .forms import SquadCreate, VolunterCreate, UserCreate
+from .forms import (
+    SquadCreate,
+    VolunterCreate,
+    UserCreate,
+    UserChange,
+    SquadChange,
+    VolunterChange,
+)
 from .models import Admin, Squad, SquadType, Volunter, VolunterType
 
 
@@ -150,3 +157,32 @@ class VolunterCategory(generic.ListView):
         context = super().get_context_data(**kwargs)
         context["path"] = reverse("account:volunter-list")
         return context
+
+
+def user_change(request):
+    role = request.user.get_role()
+    if request.method == "POST":
+        form1 = UserChange(request.POST, request.FILES, instance=request.user)
+        if role == "Volunter":
+            form2 = VolunterChange(
+                request.POST, instance=Volunter.objects.get(user=request.user)
+            )
+        else:
+            form2 = SquadChange(
+                request.POST, instance=Squad.objects.get(user=request.user)
+            )
+        if form1.is_valid() and form2.is_valid():
+
+            form1.save()
+            form2.save()
+            return HttpResponseRedirect(reverse_lazy("account:profile"))
+
+    else:
+        form1 = UserChange(instance=request.user)
+        if role == "Volunter":
+            form2 = VolunterChange(instance=Volunter.objects.get(user=request.user))
+        else:
+            form2 = SquadChange(instance=Squad.objects.get(user=request.user))
+
+    context = {"form1": form1, "form2": form2}
+    return render(request, "account/user_update.html", context)

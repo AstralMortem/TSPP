@@ -1,2 +1,9 @@
 {% extends "base_layout.html" %}
 
+{%block content%}
+<div id="content-div" >
+    {%if redirect_path%}
+        <div hx-get="{{redirect_path}}" hx-trigger="load" hx-target="#content-div" hx-swap="innerHTML"></div> 
+    {%endif%}
+</div>
+{%endblock%}

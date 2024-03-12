@@ -1,5 +1,5 @@
 from turtle import title
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.utils import timezone
@@ -11,7 +11,11 @@ from django import forms
 
 
 def index(request):
-    return render(request, "index.html")
+    context = {}
+    if request.user.is_authenticated:
+        context = {"redirect_path": reverse("fundraising:view")}
+
+    return render(request, "index.html", context)
 
 
 # ============ Orders section =========================

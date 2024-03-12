@@ -25,7 +25,7 @@
                     {%endif%}
                         <div>
                         {%if request.user.pk == profile.user.pk%}
-                            <a href="#" class="button is-info">Edit</a>
+                            <a hx-get="{%url 'account:profile-update'%}" hx-swap="innerHTML" hx-target="#content-div" class="button is-info">Edit</a>
                         {%else%}
                             <a hx-post="{%url 'chat:create' user_id=profile.user.pk %}" hx-target="#content-detail" hx-swap="#innerHTML" class="button is-primary">Відкрити чат</a>
                         {%endif%}
