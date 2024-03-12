@@ -84,6 +84,9 @@ class User(AbstractBaseUser, PermissionsMixin):
             return Squad.objects.get(user=self)
         elif self.get_role() == "Admin":
             return Admin.objects.get(user=self)
+        return self
+
+    def get_username(self):
         return self.email
 
 
@@ -101,6 +104,9 @@ class Admin(models.Model):
         if self.user.image:
             return self.user.image.url
         return "/static/img/no_image.png"
+
+    def get_username(self):
+        return self.__str__()
 
 
 class VolunterType(models.Model):
@@ -141,6 +147,9 @@ class Volunter(models.Model):
             return self.organization_name
         return self.full_name
 
+    def get_username(self):
+        return self.__str__()
+
     def get_photo(self):
         if self.user.image:
             return self.user.image.url
@@ -164,3 +173,6 @@ class Squad(models.Model):
         if self.user.image:
             return self.user.image.url
         return "/static/img/no_image.png"
+
+    def get_username(self):
+        return self.__str__()

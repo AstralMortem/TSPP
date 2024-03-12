@@ -43,20 +43,20 @@
                             <a class="dropdown-item" hx-get={%url 'orders:complete' pk=object.pk%}>
                                 Помітити виконаним
                             </a>
-                            <a href="#" class="dropdown-item" hx-get={%url 'orders:untake-contractor' pk=object.pk%}>
+                            <a class="dropdown-item" hx-get={%url 'orders:untake-contractor' pk=object.pk%}>
                                 Вилучити виконавця
                             </a>
                             
                             {%endif%}
-                            {%if object.is_taken and object.is_completed%}
+                            {%if object.is_taken %}
                             <hr class="dropdown-divider">
-                                <a class="dropdown-item">
+                                <a class="dropdown-item" hx-post="{%url 'chat:create' user_id=object.volunter.pk%}" hx-target="#content-detail" hx-swap="innerHTML">
                                 Відкрити чат по запиту
                                 </a>
                             {%endif%}  
                         {%else%}
-                            {%if object.is_taken and object.is_competed%}
-                            <a class="dropdown-item">
+                            {%if object.is_taken %}
+                            <a class="dropdown-item" hx-post="{%url 'chat:create' user_id=object.squad.pk%}" hx-target="#content-detail" hx-swap="innerHTML">
                                 Відкрити чат по запиту
                                 </a>
                             {%endif%}

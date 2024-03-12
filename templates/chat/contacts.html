@@ -9,8 +9,9 @@
                     </figure>
                     
                     
-                    <div class="is-flex is-flex-direction-column is-shrink-0">
+                    <div class="is-flex is-flex-direction-column is-shrink-0 is-align-items-flex-end">
                         <p>{{user.get_profile}}</p>
+                        <p>{{user.email}}</p>
                         {%with role=user.get_role%}
                         <p class="tag {%if role == 'Volunter'%}is-primary{%elif role == 'Squad'%}is-warning{%else%}is-info{%endif%}">{{role}}</p>
                         {%endwith%}

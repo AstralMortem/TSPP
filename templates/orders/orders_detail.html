@@ -17,7 +17,7 @@
             <div class="is-flex gap-6 is-flex-direction-column ">
             {%if request.user.role.title == "Volunter"%}
                 <a class="button is-primary" hx-get="{%url 'orders:take' pk=object.id%}">Взяти запит</a>
-                <a class="button is-primary">Відкрити чат</a>
+                <a class="button is-primary" hx-post="{%url 'chat:create' user_id=object.squad.pk%}" hx-target="#content-detail" hx-swap="innerHTML">Відкрити чат</a>
             {%endif%}
             {%if request.user.pk == order.squad.pk%}
                 <a  hx-get="{%url 'orders:delete' pk=object.pk%}" 

@@ -24,7 +24,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         username = await self.get_username(self.user.pk)
         recipient = await self.get_another_user(self.chat_id)
 
-        await self.save_message(recipient, message, username)
+        message_date = await self.save_message(recipient, message, username)
 
         await self.channel_layer.group_send(
             self.chat_name,
@@ -34,6 +34,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 "username": username,
                 "recipient": recipient.pk,
                 "sender": self.user.pk,
+                "date": str(message_date.hour) + ":" + str(message_date.minute),
             },
         )
 
@@ -41,7 +42,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = event["message"]
         username = event["username"]
         sender_id = event["sender"]
-        message_html = f"<div hx-swap-oob='beforeend:#messages'><div id='message-{sender_id}' class='notification p-1'><p class='title is-5'><b>{username}</b></p>{str(message)}</div></div>"
+        date = event["date"]
+        message_html = f"<div hx-swap-oob='beforeend:#messages'><div id='message-{sender_id}' class='notification p-2'><div class='is-flex is-flex-direction-row is-justify-content-space-between gap-10'><p class='title is-5 mb-0'><b>{username}</b></p><p class='is-size-7'>{date}</p></div>{str(message)}</div></div>"
 
         await self.send(text_data=str({"message": message_html, "username": username}))
 
@@ -52,13 +54,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
     def save_message(self, recipient, message, username):
         sender = self.user
         chat = Chat.objects.get(pk=self.chat_id)
-        Message.objects.create(
+        msg = Message.objects.create(
             chat=chat,
             sender=sender,
             recipient=recipient,
             message=message,
             username=username,
         )
+        return msg.created
 
     @sync_to_async
     def get_username(self, user_id):

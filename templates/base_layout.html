@@ -64,6 +64,12 @@
                             </span>
                     </a>
                     <div class="navbar-dropdown">
+                      <div class="navbar-item is-flex is-flex-direction-row is-justify-content-space-between">
+                        <p class="is-flex is-flex-wrap-wrap">{{request.user.get_profile}}</p>
+                        <figure class="image is-32x32">
+                          <img src="{{request.user.get_photo}}" class="is-rounded">
+                        </figure>
+                      </div>
                       <a class="navbar-item" hx-get="{%url 'account:profile'%}" hx-swap="innerHTML" hx-target="#content-div">
                         Профіль
                       </a>

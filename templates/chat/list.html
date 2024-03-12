@@ -9,14 +9,16 @@
                     </figure>
                     
                     
-                    <div class="is-flex is-flex-direction-column is-shrink-0">
+                    <div class="is-flex is-flex-direction-column is-shrink-0 is-align-items-flex-end">
                         {%if chat.user1 == request.user%}
                             <p>{{chat.user2.get_profile}}</p>
+                            <p>{{chat.user2.email}}</p>
                             {%with role=chat.user2.get_role%}
                                 <p class="tag {%if role == 'Volunter'%}is-primary{%elif role == 'Squad'%}is-warning{%else%}is-info{%endif%}">{{role}}</p>
                             {%endwith%}
                         {%else%}
                             <p>{{chat.user1.get_profile}}</p>
+                            <p>{{chat.user1.email}}</p>
                             {%with role=chat.user1.get_role%}
                                 <p class="tag {%if role == 'Volunter'%}is-primary{%elif role == 'Squad'%}is-warning{%else%}is-info{%endif%}">{{role}}</p>
                             {%endwith%}

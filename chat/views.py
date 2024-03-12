@@ -1,3 +1,5 @@
+from django.db.models import Q
+from django.db.models.query import QuerySet
 from django.http import HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -10,14 +12,41 @@ def chat_view(request):
     return render(request, "chat/chat_view.html")
 
 
-def contacts(request):
-    users = get_user_model().objects.exclude(pk=request.user.pk)
-    return render(request, "chat/contacts.html", {"users": users})
+class ContactsList(generic.ListView):
+    model = get_user_model()
+    paginate_by = 2
+    template_name = "chat/contacts.html"
+    context_object_name = "users"
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs.exclude(pk=self.request.user.pk)
+        filter_search = self.request.GET.get("search")
+        if filter_search:
+            qs = qs.filter(
+                Q(role__title__icontains=filter_search)
+                | Q(email__icontains=filter_search)
+            )
+        return qs
 
 
 class ChatList(generic.ListView):
     model = Chat
     template_name = "chat/list.html"
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(Q(user1=self.request.user) | Q(user2=self.request.user))
+        filter_search = self.request.GET.get("search")
+        if filter_search:
+            qs = qs.filter(
+                Q(user1__role__title__icontains=filter_search)
+                | Q(user2__role__title__icontains=filter_search)
+                | Q(user1__email__icontains=filter_search)
+                | Q(user2__email__icontains=filter_search)
+            )
+        print(qs)
+        return qs
 
 
 def create_room(request, user_id):
@@ -39,7 +68,7 @@ def join_room(request, chat_id):
     chat = Chat.objects.get(pk=chat_id)
     messages = Message.objects.filter(chat=chat)
     context = {
-        "chat_room": chat,
+        "chat": chat,
         "messages": messages,
     }
     return render(request, "chat/room.html", context)

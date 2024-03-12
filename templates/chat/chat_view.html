@@ -1,5 +1,5 @@
 <div class="columns">
-    <div class="column is-4 is-hidden" id="filter-column">
+    <div class="column is-3 is-hidden" id="filter-column">
       <div class="box mt-2">
         <p class="title is-5">Контакти</p>
         <div class="field">
@@ -33,7 +33,7 @@
                 
                 <div class="field">
                     <p class="control has-icons-left">
-                      <input class="input" type="text" placeholder="Пошук" hx-get="/" 
+                      <input class="input" type="text" placeholder="Пошук" hx-get="{%url 'chat:list'%}" 
                       name="search" 
                       hx-target="#side-menu"
                       hx-swap="innerHTML"

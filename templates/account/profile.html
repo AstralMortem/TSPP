@@ -7,35 +7,31 @@
                 </figure>
             </div>
             <div class="column">
-                {%if profile.user.get_role == 'Squad'%}
-                    <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+                <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+                    {%if profile.user.get_role == 'Squad'%}
                         <div>
                             <p class="title">{{profile.squad_name}}</p>
                             <p class="subtitle">{{profile.squad_type.name}}</p>
                         </div>
-                        <div>
-                            <a href="#" class="button is-info">Edit</a>
-                        </div>
-                    </div>
-                {%elif profile.user.get_role == 'Volunter'%}
-                    <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+                    {%else%}
                         <div>
                             {%if profile.is_organisation%}
                                 <p class="title">{{profile.organization_name}} <span class="tag is-info">Організація</span></p>
                             {%else%}
                                 <p class="title">{{profile.full_name}}</p>
                             {%endif%}
-                            
                             <p class="subtitle">{{profile.volunter_type.name}}</p>
                         </div>
+                    {%endif%}
                         <div>
+                        {%if request.user.pk == profile.user.pk%}
                             <a href="#" class="button is-info">Edit</a>
+                        {%else%}
+                            <a hx-post="{%url 'chat:create' user_id=profile.user.pk %}" hx-target="#content-detail" hx-swap="#innerHTML" class="button is-primary">Відкрити чат</a>
+                        {%endif%}
                         </div>
-                    </div>
-                
-                    
-                {%endif%}
-
+                        
+                </div>
                 <hr/>
                 <div class="is-flex is-justify-content-space-evenly">
                     <div class="box m-0">
@@ -47,7 +43,6 @@
                         <p class="subtitle is-5">{{profile.user.phone}}</p>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -76,7 +71,6 @@
             hx-target="#grid-orders"
             hx-trigger="load"
             class="button is-primary"></div>
-
         </div>
     </div>
     <div class="box">
