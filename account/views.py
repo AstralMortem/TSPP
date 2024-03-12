@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -8,7 +9,7 @@ from django.contrib.auth.views import LoginView
 
 from orders.models import Order
 from .forms import SquadCreate, VolunterCreate, UserCreate
-from .models import Admin, Squad, SquadType, Volunter
+from .models import Admin, Squad, SquadType, Volunter, VolunterType
 
 
 class UserLoginView(LoginView):
@@ -110,3 +111,42 @@ def squad_view(request):
 
 def volunter_view(request):
     return render(request, "account/volunter_view.html")
+
+
+class VolunterListView(generic.ListView):
+    paginate_by = 4
+    model = Volunter
+    template_name = "account/volunter_list.html"
+
+    def get_queryset(self):
+        qs = self.model.objects.all()
+        filter_search = self.request.GET.get("search")
+        filter_category = self.request.GET.get("category")
+
+        if filter_search:
+            qs = self.model.objects.filter(
+                Q(full_name__icontains=filter_search)
+                | Q(organization_name__icontains=filter_search)
+            )
+        if filter_category:
+            qs = self.model.objects.filter(volunter_type__pk=filter_category)
+
+        if not filter_category and not filter_search:
+            return super().get_queryset()
+        return qs
+
+
+class VolunterDetailView(generic.DetailView):
+    template_name = "account/profile.html"
+    context_object_name = "profile"
+    model = Volunter
+
+
+class VolunterCategory(generic.ListView):
+    model = VolunterType
+    template_name = "components/category.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["path"] = reverse("account:volunter-list")
+        return context

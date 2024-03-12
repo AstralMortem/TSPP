@@ -1,7 +1,7 @@
 <ul class="is-overflowed" id="side-ul">
     {%for user in object_list%}
         <li class="mb-5">
-            <div class="card is-clickable p-2 card-hovered" hx-get="{%url 'account:squad-detail' pk=user.pk%}" hx-target="#content-detail" hx-swap="innerHTML" hx-trigger="click">
+            <div class="card is-clickable p-2 card-hovered" hx-get="{%url 'account:volunter-detail' pk=user.pk%}" hx-target="#content-detail" hx-swap="innerHTML" hx-trigger="click">
                 <div class="columns">
                     <div class="column is-half">
                         <figure class="image is-128x128">
@@ -9,8 +9,12 @@
                         </figure>
                     </div>
                     <div class="column">
-                        <p class="title is-5">{{user.squad_name}}</p>
-                        <p class="subtitle is-6">{{user.squad_type.name}}</p>
+                            {%if user.is_organisation%}
+                            <p class="title is-5">{{user.organization_name}} <span class="tag is-info">Організація</span></p>
+                            {%else%}
+                            <p class="title is-5">{{user.full_name}}</p>
+                            {%endif%}
+                            <p class="subtitle is-6">{{user.squad_type.name}}</p>
                     </div>
                 </div>
             </div>

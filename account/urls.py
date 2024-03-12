@@ -2,6 +2,7 @@ from django.urls import path
 from django.contrib.auth.views import LogoutView
 from .views import (
     UserLoginView,
+    VolunterCategory,
     user_signup,
     user_signup_next,
     user_signup_complete,
@@ -10,6 +11,9 @@ from .views import (
     SquadDetailView,
     SquadListView,
     SquadCategory,
+    volunter_view,
+    VolunterDetailView,
+    VolunterListView,
 )
 
 app_name = "account"
@@ -28,4 +32,9 @@ urlpatterns = [
     path("squad/category/", SquadCategory.as_view(), name="squad-category"),
     path("squad/<int:pk>/", SquadDetailView.as_view(), name="squad-detail"),
     path("squad/", SquadListView.as_view(), name="squad-list"),
+    # volunters
+    path("volunter/view/", volunter_view, name="volunter-view"),
+    path("volunter/category/", VolunterCategory.as_view(), name="volunter-category"),
+    path("volunter/<int:pk>/", VolunterDetailView.as_view(), name="volunter-detail"),
+    path("volunter/", VolunterListView.as_view(), name="volunter-list"),
 ]
