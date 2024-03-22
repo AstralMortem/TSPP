@@ -1,9 +1,32 @@
 {% extends "base_layout.html" %}
+{%load static%}
 
 {%block content%}
 <div id="content-div" >
     {%if redirect_path%}
         <div hx-get="{{redirect_path}}" hx-trigger="load" hx-target="#content-div" hx-swap="innerHTML"></div> 
     {%endif%}
+
+    <div class="is-flex is-flex-direction-column mt-2 container">
+    <div class="columns">
+        <div class="column"><img src="{% static 'img/drone.webp' %}"></div>
+        <div class="column">
+            <div class="card p-4">
+                <p class="title has-text-centered">Хто ми?</p>
+                <p class="subtitle has-text-centered">MAVU Military Association of Volunteers of Ukraine</p>
+                <p>Платформа MAVU була створена після початку повномасштабного вторгнення країни-агресора на територію нашої держави.</p>
+            </div>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column is-half">
+            <div class="card p-4">
+                <p class="title has-text-centered">Для чого ми?</p>
+                <p>Дана платформа створена виключно для наших захисників, що потребують невідкладної допомоги. Розробники платформи дали змогу військовим швидко і оперативно розміщувати запити на необхідне обладнання, автомобілі, БПЛА, та все інше, що наблизить нашу перемогу. Волонтери, які зареєстровані на MAVU , можуть швидко приймати замовлення та відкривати збори, аби якнайшвидше допомогти справжнім героям українського народу. </p>
+            </div>
+        </div>
+        <div class="column is-half">IMG</div>
+    </div>
+    </div>
 </div>
 {%endblock%}
