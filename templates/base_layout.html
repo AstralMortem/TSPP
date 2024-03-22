@@ -1,10 +1,12 @@
 {% extends "base.html" %}
-
+{%load static%}
 {%block header%}
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
-        <p>LOGO</p>
+        <figure class="image is-32x32">
+          <img src="{%static 'img/logo.svg'%}" >
+        </figure>
       </a>
   
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">

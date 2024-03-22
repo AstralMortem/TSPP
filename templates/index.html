@@ -7,26 +7,125 @@
         <div hx-get="{{redirect_path}}" hx-trigger="load" hx-target="#content-div" hx-swap="innerHTML"></div> 
     {%endif%}
 
-    <div class="is-flex is-flex-direction-column mt-2 container">
-    <div class="columns">
-        <div class="column"><img src="{% static 'img/drone.webp' %}"></div>
-        <div class="column">
-            <div class="card p-4">
-                <p class="title has-text-centered">Хто ми?</p>
-                <p class="subtitle has-text-centered">MAVU Military Association of Volunteers of Ukraine</p>
-                <p>Платформа MAVU була створена після початку повномасштабного вторгнення країни-агресора на територію нашої держави.</p>
+    <nav class="level card p-4 my-2">
+    <div class="level-item has-text-centered">
+        <div>
+        <p class="heading">К-ть волонтерів</p>
+        <p class="title">3,456</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+        <p class="heading">К-ть військових</p>
+        <p class="title">688</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+        <p class="heading">К-ть виконаних запитів</p>
+        <p class="title">456</p>
+        </div>
+    </div>
+    <div class="level-item has-text-centered">
+        <div>
+        <p class="heading">Найдорожчий закритий збір</p>
+        <p class="title">30M. ₴</p>
+        </div>
+    </div>
+    </nav>
+
+    <div class="is-flex is-flex-direction-column my-2" style="margin:0 8%;">
+        <div class="columns is-align-items-center">
+            <div class="column">
+                <figure class="image">
+                    <img src="{% static 'img/drone.webp' %}" style="border-radius:15px;">
+                </figure>
+                </div>
+            <div class="column px-6">
+                <div class="card p-4 is-flex is-flex-direction-column ">
+                    <p class="title has-text-centered">Хто ми?</p>
+                    <figure class="image is-128x128 is-align-self-center">
+                            <img src="{%static 'img/logo.svg'%}" >
+                        </figure>
+                    <p class="subtitle has-text-centered">MAVU Military Association of Volunteers of Ukraine</p>
+
+                        
+                        
+                    <p>Платформа MAVU була створена після початку повномасштабного вторгнення країни-агресора на територію нашої держави, 4-ма молодими студентами з НУБІП.</p>
+                </div>
+            </div>
+        </div>
+        <div class="columns is-align-items-center">
+            <div class="column is-half px-6">
+                <div class="card p-4">
+                    <p class="title has-text-centered">Для чого ми?</p>
+                    <p>Дана платформа створена виключно для наших захисників, що потребують невідкладної допомоги. Розробники платформи дали змогу військовим швидко і оперативно розміщувати запити на необхідне обладнання, автомобілі, БПЛА, та все інше, що наблизить нашу перемогу. Волонтери, які зареєстровані на MAVU , можуть швидко приймати замовлення та відкривати збори, аби якнайшвидше допомогти справжнім героям українського народу. </p>
+                </div>
+            </div>
+            <div class="column is-half">
+                <figure class="image">
+                    <img src="{%static 'img/army.webp'%}" style="border-radius:15px;">
+                </figure>
+                </div>
+        </div>
+        <div class="columns is-align-items-center">
+            <div class="column">
+                <figure class="image">
+                    <img src="{% static 'img/volunters.jpg' %}" style="border-radius:15px;">
+                </figure>
+                </div>
+            <div class="column px-6">
+                <div class="card p-4">
+                    <p class="title has-text-centered">Перші результати</p>
+                    <p>Під час пілотного запуску, платформа швидко отримала популярність, багато волонтерів та військових долучились до нас. В перший же день ми закрили збір на <b>1000000₴</b> і тим самим врятувавши життя    наших бійців.</p>
+                    <p>Наша сила - у єднанні, а наша перемога - у вашій підтримці. 
+                        Спільно ми зможемо пережити ці випробування та перемогти.<b>Слава Україні!</b> </p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="columns">
-        <div class="column is-half">
-            <div class="card p-4">
-                <p class="title has-text-centered">Для чого ми?</p>
-                <p>Дана платформа створена виключно для наших захисників, що потребують невідкладної допомоги. Розробники платформи дали змогу військовим швидко і оперативно розміщувати запити на необхідне обладнання, автомобілі, БПЛА, та все інше, що наблизить нашу перемогу. Волонтери, які зареєстровані на MAVU , можуть швидко приймати замовлення та відкривати збори, аби якнайшвидше допомогти справжнім героям українського народу. </p>
+
+    <div class="card p-4 my-6">
+        <p class="title has-text-centered ">Спонсори</p>
+    <nav class="level mt-4">
+        <div class="level-item has-text-centered">
+            <div class="is-flex is-flex-direction-column is-justify-content-space-around is-align-items-center">
+                <figure class="image is-64x64">
+                    <img src="{% static 'img/sponsor/1.svg'%}" alt="1">
+                </figure>
+                <p class="title is-4">3 ОШБ</p>
             </div>
         </div>
-        <div class="column is-half">IMG</div>
-    </div>
-    </div>
+        <div class="level-item has-text-centered">
+            <div class="is-flex is-flex-direction-column is-justify-content-space-around is-align-items-center">
+                <figure class="image is-64x64">
+                    <img src="{% static 'img/sponsor/2.svg'%}" alt="1">
+                </figure>
+                <p class="title is-4">МО України</p>
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div class="is-flex is-flex-direction-column is-justify-content-space-around is-align-items-center" >
+                <figure class="image is-64x64">
+                    <img src="{% static 'img/sponsor/3.svg'%}" alt="1">
+                </figure>
+                <p class="title is-4">Фонд повернись живим</p>
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div class="is-flex is-flex-direction-column is-justify-content-space-around is-align-items-center">
+                <figure class="image is-64x64">
+                    <img src="{% static 'img/sponsor/4.svg'%}" alt="1">
+                </figure>
+                <p class="title is-4">Дія</p>
+            </div>
+        </div>
+    </nav>
 </div>
+    
+</div>
+
+<script src="{% static 'js/ant.js' %}"></script>
+
+<script>new Ant()</script>
 {%endblock%}

@@ -26,3 +26,6 @@ volunter_box.addEventListener("change",function(e){
         organisation_name.classList.add("is-hidden")
     }
 })
+
+
+
