@@ -197,3 +197,7 @@ JAZZMIN_SETTINGS = {
 JAZZMIN_UI_TWEAKS = {
     "theme": "flatly",
 }
+
+
+
+DEFAULT_PAGINATION = 10

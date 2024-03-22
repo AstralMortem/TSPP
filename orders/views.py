@@ -1,4 +1,5 @@
 from turtle import title
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
@@ -72,7 +73,7 @@ class OrdersCategoryListView(generic.ListView):
 
 
 class OrdersListView(generic.ListView):
-    paginate_by = 4
+    paginate_by = settings.DEFAULT_PAGINATION
     model = Order
     template_name = "orders/list.html"
 

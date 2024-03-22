@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -44,7 +45,7 @@ class FundraisingCategoryListView(generic.ListView):
 
 
 class FundraisingListView(generic.ListView):
-    paginate_by = 4
+    paginate_by = settings.DEFAULT_PAGINATION
     model = Fundraising
     template_name = "fundraising/list.html"
 
