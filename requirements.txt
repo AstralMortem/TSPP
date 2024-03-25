@@ -12,9 +12,11 @@ Django==5.0.3
 django-crispy-forms==2.1
 django-jazzmin==2.6.0
 django-model-utils==4.4.0
+gunicorn==21.2.0
 hyperlink==21.0.0
 idna==3.6
 incremental==22.10.0
+packaging==24.0
 pillow==10.2.0
 pyasn1==0.5.1
 pyasn1-modules==0.3.0
