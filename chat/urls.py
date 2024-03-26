@@ -4,6 +4,12 @@ from . import views
 from .consumers import ChatConsumer
 
 app_name = "chat"
+websocket_urlpatterns = [
+    path("chat/<uuid:chat_id>", ChatConsumer.as_asgi()),
+]
+
+
+
 urlpatterns = [
     path("", views.chat_view, name="view"),
     path("list/", views.ChatList.as_view(), name="list"),
@@ -12,6 +18,4 @@ urlpatterns = [
     path("join/<uuid:chat_id>/", views.join_room, name="join"),
 ]
 
-websocket_urlpatterns = [
-    path("chat/<uuid:chat_id>", ChatConsumer.as_asgi()),
-]
+
