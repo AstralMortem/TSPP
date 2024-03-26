@@ -15,3 +15,4 @@ DATABASES = {
 }
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
+CSRF_TRUSTED_ORIGIN = ['https://*.mavu.pp.ua']

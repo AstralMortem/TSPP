@@ -3,6 +3,7 @@ services:
   db:
     image: postgres
     container_name: pgdb
+    restart: always
     env_file:
       - ./.env
     volumes:
@@ -13,6 +14,7 @@ services:
 
   web:
     container_name: mavu-site
+    restart: always
     build: .
     command: bash -c "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn tspp.wsgi:application --workers 4 --log-level debug --timeout 120 --bind 0.0.0.0:8000 --reload"
     expose:
@@ -48,6 +50,7 @@ services:
   
   reverse-proxy:
     image: traefik:v2.10
+    restart: always
     container_name: reverse-proxy
     ports:
       - "80:80"
