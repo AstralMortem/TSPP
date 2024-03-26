@@ -10,7 +10,13 @@ services:
       - pgdbdata:/var/lib/postgresql/data/
     expose:
       - 5432
-
+  redis:
+    image: redis:latest
+    restart: always
+    expose:
+      - 6379
+    volumes:
+      - redis_volume:/root/redis
 
   web:
     container_name: mavu-site
@@ -66,4 +72,5 @@ volumes:
   pgdbdata: null
   static_volume: null
   media_volume: null
+  redis_volume: null
 
